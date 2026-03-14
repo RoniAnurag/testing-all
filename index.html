@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOD SOLDIERS TEAM GLOBAL | The World Shall Be Saved</title>
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Fonts: Cinzel & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* --- 1. CORE VARIABLES --- */
+        :root {
+            --gold: #FFD700; 
+            --gold-dark: #b8860b;
+            --black: #050505;
+            --white: #ffffff;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @media (min-width: 769px) {
+            * { cursor: none; }
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* --- BACKGROUND & CANVAS --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: #000;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.85) 100%);
+            pointer-events: none;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+        }
+        @media (min-width: 769px) {
+            .cursor-dot, .cursor-outline { display: block; }
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--gold); }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid var(--gold);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1440px;
+            padding: 12px 30px;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.4s;
+        }
+        nav.scrolled { top: 0; width: 100%; border-radius: 0; background: #000; padding: 15px 40px; }
+
+        .logo { font-size: 1.1rem; font-weight: 900; color: white; text-decoration: none; font-family: 'Cinzel'; }
+        .logo span { color: var(--gold); }
+
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a { 
+            color: rgba(255,255,255,0.7); font-size: 0.62rem; font-weight: 700; 
+            text-transform: uppercase; text-decoration: none; transition: 0.3s; white-space: nowrap;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .menu-toggle { display: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: var(--black); z-index: 2000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 20px; transition: 0.5s;
+        }
+        .mobile-nav.active { right: 0; }
+        .mobile-nav a { font-family: 'Cinzel'; font-size: 1.5rem; color: white; text-decoration: none; text-transform: uppercase; }
+
+        /* --- BUTTONS (SHARP RECTANGLE & SLIDE ANIMATION) --- */
+        .btn-brutal {
+            padding: 15px 35px;
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-brutal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -101%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            z-index: -1;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-brutal:hover {
+            color: var(--black) !important;
+            border-color: var(--gold);
+        }
+        .btn-brutal:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .display-text {
+            font-size: clamp(2.5rem, 8vw, 6.5rem);
+            line-height: 0.9;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff 40%, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(45deg, var(--gold), #fff, var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- SECTIONS --- */
+        .section-padding { padding: 100px 20px; max-width: 1400px; margin: 0 auto; }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-tag { color: var(--gold); font-weight: 800; letter-spacing: 4px; font-size: 0.75rem; margin-bottom: 10px; display: block; text-transform: uppercase; }
+        .divider-gold { width: 80px; height: 3px; background: var(--gold); margin: 20px auto 30px; }
+
+        /* --- FOUNDER (CENTERED) --- */
+        .founder-container { text-align: center; max-width: 1000px; margin: 0 auto; }
+        .founder-img-wrapper {
+            width: 250px; height: 250px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden;
+            border: 4px solid var(--white); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .founder-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .founder-desc { font-size: 1.05rem; color: #ccc; line-height: 1.8; margin-top: 30px; }
+
+        /* --- STATS GRID --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,0.02); border-y: 1px solid var(--border); }
+        .stat-item { padding: 50px 20px; text-align: center; border-right: 1px solid var(--border); }
+        .stat-item:last-child { border-right: none; }
+        .stat-number { font-size: 3.5rem; font-family: 'Cinzel'; color: var(--gold); font-weight: 900; line-height: 1; }
+
+        /* --- MISSIONS BENTO --- */
+        .missions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .mission-card {
+            background: #0a0a0a; border: 1px solid var(--border); border-radius: 15px;
+            overflow: hidden; transition: 0.4s; display: flex; flex-direction: column;
+        }
+        .mission-card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .mission-img { height: 180px; background-size: cover; background-position: center; transition: 0.5s; }
+        .mission-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .mission-info h3 { font-size: 1.1rem; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; }
+        .mission-info p { font-size: 0.75rem; color: #888; margin-bottom: 20px; flex-grow: 1; }
+        .btn-gallery { 
+            padding: 8px 16px; border: 1px solid var(--gold); color: var(--gold); 
+            text-transform: uppercase; font-family: 'Cinzel'; font-size: 0.65rem; text-decoration: none;
+            transition: 0.3s; width: fit-content;
+        }
+        .btn-gallery:hover { background: var(--gold); color: #000; }
+
+        /* --- HUB ROWS (ARTS & CONNECT) --- */
+        .hub-row { display: flex; gap: 60px; align-items: center; margin-bottom: 100px; }
+        .hub-content { flex: 1; }
+        .hub-img-container { flex: 1; border-radius: 30px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .hub-img-container img { width: 100%; display: block; filter: grayscale(40%); transition: 0.6s; }
+        .hub-img-container:hover img { filter: grayscale(0); transform: scale(1.05); }
+
+        /* --- BELIEFS --- */
+        .beliefs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .belief-item {
+            background: #0a0a0a; border: 1px solid var(--border); padding: 25px; border-radius: 15px;
+            display: flex; align-items: center; gap: 15px; transition: 0.3s;
+        }
+        .belief-item:hover { border-color: var(--gold); background: rgba(255,215,0,0.05); }
+        .belief-num {
+            width: 35px; height: 35px; background: var(--gold); color: #000; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-family: 'Cinzel'; font-weight: 900;
+        }
+
+        /* --- ACCORDION (ACCEPTING JESUS) --- */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 25px 0; cursor: pointer; }
+        .faq-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Cinzel'; font-size: 1.1rem; }
+        .faq-content { max-height: 0; overflow: hidden; transition: 0.5s ease; color: #aaa; font-size: 0.95rem; }
+        .faq-item.active .faq-content { max-height: 400px; padding-top: 20px; }
+        .faq-item.active i { transform: rotate(45deg); color: var(--gold); }
+
+        /* --- FOOTER VIDEO --- */
+        #enlist-footer { position: relative; padding: 150px 20px; text-align: center; overflow: hidden; }
+        #footer-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.4; }
+        .footer-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, #000, transparent, #000); z-index: -1; }
+
+        /* --- MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(20px); z-index: 4000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #0a0a0a; border: 1px solid var(--gold); padding: 40px; max-width: 900px; width: 100%; border-radius: 30px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.active { display: flex; }
+        .close-modal { position: absolute; top: 25px; right: 25px; font-size: 2.5rem; color: var(--gold); cursor: pointer; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .missions-grid, .stats-grid, .beliefs-grid { grid-template-columns: repeat(2, 1fr); }
+            .hub-row { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 600px) {
+            .missions-grid, .stats-grid, .beliefs-grid { grid-template-columns: 1fr; }
+            .display-text { font-size: 3rem; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CANVAS BACKGROUND -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-overlay"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-nav" id="mobileNav">
+        <span class="close-modal" onclick="toggleMenu()">&times;</span>
+        <a href="#home">Home</a>
+        <a href="#story">Our Story</a>
+        <a href="#vision">Vision</a>
+        <a href="#founder">Founder</a>
+        <a href="#missions">Missions</a>
+        <a href="#arts">Arts Hub</a>
+        <a href="#contact">Join Now</a>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <a href="#" class="logo">GOD SOLDIERS TEAM <span>GLOBAL</span></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#story">Our Story</a>
+            <a href="#vision">Vision</a>
+            <a href="#founder">Founder</a>
+            <a href="#leaders">Leaders</a>
+            <a href="#missions">Missions</a>
+            <a href="#arts">Arts Hub</a>
+            <a href="#blogs">Blogs</a>
+            <a href="#beliefs">Beliefs</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home" class="section-padding" style="height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+        <div data-aos="zoom-in" data-aos-duration="1500">
+            <p class="section-tag">Est. 2009 • Apostolic Mission</p>
+            <h1 class="display-text">THE WORLD<br>SHALL BE <span class="gold-gradient-text">SAVED</span></h1>
+            <p style="max-width: 650px; margin: 0 auto 40px; color: #888; font-size: 1.1rem;">We are the Soldiers of the Cross. A generation rising to fulfill the Great Commission with power and fire.</p>
+            <a href="#contact" class="btn-brutal">Enlist as a Soldier</a>
+        </div>
+    </header>
+
+    <!-- STATS (ANIMATED METER) -->
+    <section class="stats-grid" id="stats-section">
+        <div class="stat-item">
+            <div class="stat-number"><span class="counter" data-target="25">0</span>+</div>
+            <p class="section-tag">States Reached</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number"><span class="counter" data-target="3000">0</span></div>
+            <p class="section-tag">Souls / Meeting</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number"><span class="counter" data-target="12">0</span></div>
+            <p class="section-tag">Ministries</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <p class="section-tag">War Room</p>
+        </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section id="story" class="section-padding">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">THE GENESIS</span>
+            <h2>OUR STORY</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div style="max-width: 1000px; margin: 0 auto; text-align: center; line-height: 2;" data-aos="fade-up">
+            <p style="color: #ccc; font-size: 1.1rem; margin-bottom: 20px;">
+                The story of GOD SOLDIERS TEAM GLOBAL begins in 2009. Daniel was a young missionary in the southern part of India. His ministry there was challenging. He recalled an occasion when he walked an entire day to preach in a certain village, only to find five people in attendance at his meeting—and none of them were saved.
+            </p>
+            <p style="color: #ccc; font-size: 1.1rem;">
+                It was a frustrating and discouraging time for him. Daniel cried out to the Lord, saying, "Oh God, this cannot be. This cannot be the impact of the glorious gospel." Then something happened that changed Daniel's life and the course of history.
+            </p>
+        </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section id="story" class="section-padding">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">THE GENESIS</span>
+            <h2>OUR STORY</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div style="max-width: 1000px; margin: 0 auto; text-align: center; line-height: 2;" data-aos="fade-up">
+            <p style="color: #ccc; font-size: 1.1rem; margin-bottom: 20px;">
+                The story of GOD SOLDIERS TEAM GLOBAL begins in 2009. Daniel was a young missionary in the southern part of India. His ministry there was challenging. He recalled an occasion when he walked an entire day to preach in a certain village, only to find five people in attendance at his meeting—and none of them were saved.
+            </p>
+            <p style="color: #ccc; font-size: 1.1rem;">
+                It was a frustrating and discouraging time for him. Daniel cried out to the Lord, saying, "Oh God, this cannot be. This cannot be the impact of the glorious gospel." Then something happened that changed Daniel's life and the course of history.
+            </p>
+        </div>
+    </section>
+
+    <!-- VISION & MISSIONS -->
+    <section id="vision" class="section-padding" style="background: rgba(255,215,0,0.02);">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">APOSTOLIC VISION</span>
+            <h2>VISION & MISSIONS</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div style="max-width: 1000px; margin: 0 auto;" data-aos="fade-up">
+            <div style="background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid var(--border); position: relative; text-align: center;">
+                <p style="font-size: 1.3rem; font-style: italic; color: #fff; margin-bottom: 30px;">
+                    "I left the 99 and ran after the one—the lost one is you, Daniel. I have saved you, and in the same way, you must save the lost souls."
+                </p>
+                <p style="color: #aaa; margin-top: 20px;">
+                    One night, he had a dream where he heard the voice of the Holy Spirit saying, "The world SHALL be saved." That dream marked the beginning of the ministry called GOD SOLDIERS TEAM GLOBAL. Today, we witness over 1,000 people make a decision for Christ in single service, and up to 3,000 over the course of a meeting.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDER (RESTORED CENTERED LAYOUT) -->
+    <section id="founder" class="section-padding">
+        <div class="founder-container" data-aos="fade-up">
+            <div class="founder-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="K. Daniel Founder">
+            </div>
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Our Founder</h2>
+            <div class="divider-gold"></div>
+            <div class="founder-desc">
+                <p>K.Daniel is the founder of GOD SOLDIERS TEAM GLOBAL. He is an evangelist who has spent most of his ministry preaching the gospel in more than 25 states in india and also globally. As a missionary, Daniel has led thousands of people to Christ face-to-face through open-air evangelistic campaigns in some of the most dangerous, difficult, and remote locations on earth.</p>
+                <p style="margin-top: 30px; font-style: italic; color: #fff; font-size: 1.1rem;">
+                    “God is working to create a community of redeemed people from every tribe, tongue and nation for his glory. This will help you better understand God's mission (missio-Dei) and the vital role of Christ Followers is called to play in advancing his kingdom.”
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSIONS LIST -->
+    <section id="missions" class="section-padding">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">GLOBAL DEPLOYMENT</span>
+            <h2>OUR MISSIONS</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div class="missions-grid">
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>Hope in Jesus Mission</h3>
+                    <p>(Prisons, Rehabs, Hospitals, Raped & Acid Attack survivors, Prostitutes, Blind & Handicapped orphanages)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('Hope in Jesus')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>War Room Mission</h3>
+                    <p>(Prayer Warrior's 24/7 Strategic Intercession for the Nations)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('War Room')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>Gospel of Cross</h3>
+                    <p>(Conferences Proclaiming the Power of the Finished Work of Jesus)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('Gospel of Cross')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1509024644558-2f56ce76c490?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>Lost Sheep Mission</h3>
+                    <p>(Evangelism and Outreach missions & Passion and Burden for lost souls)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('Lost Sheep')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>Teresa Children</h3>
+                    <p>(Children's Bible Camps & Charity missions providing hope to kids)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('Teresa Children')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+            <div class="mission-card" data-aos="fade-up">
+                <div class="mission-img" style="background-image: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="mission-info">
+                    <h3>Soul Winner Mission</h3>
+                    <p>(Training youth to carry their own cross and become witnesses)</p>
+                    <a href="javascript:void(0)" onclick="openGallery('Soul Winner')" class="btn-gallery">View Gallery</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JESUS CULTURE & ARTS HUB -->
+    <section id="arts" class="section-padding" style="background: rgba(0,0,0,0.3);">
+        <div class="hub-row">
+            <div class="hub-content" data-aos="fade-right">
+                <span class="section-tag">KINGDOM CREATIVITY</span>
+                <h2>JESUS CULTURE & ARTS HUB</h2>
+                <div class="divider-gold" style="margin-left: 0;"></div>
+                <p style="color: #aaa; margin-bottom: 30px;">
+                    "Enrol, Equip, Encourage." Using your God-Given Talents to offer a gift to God. Romans 12:6 says, "In his grace, God has given us different gifts."
+                </p>
+                <a href="javascript:void(0)" onclick="openArtsHub()" class="btn-brutal">Enter the Hub</a>
+            </div>
+            <div class="hub-img-container" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1514525253361-bee8a187449b?auto=format&fit=crop&w=800&q=80" alt="Arts Hub">
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSION ARTICLES (BLOGS) -->
+    <section id="blogs" class="section-padding" style="background: rgba(255,215,0,0.03);">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">THE WORD IN PRINT</span>
+            <h2>MISSION ARTICLES</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div style="text-align: center;" data-aos="fade-up">
+            <p style="max-width: 800px; margin: 0 auto 40px; color: #aaa; font-size: 1.1rem;">
+                Read detailed mission reports, frontline testimonies, and spiritual insights on our official Google Blog.
+            </p>
+            <a href="https://godsoldiersteam.blogspot.com" target="_blank" class="btn-brutal">Read My Blogs</a>
+        </div>
+    </section>
+
+    <!-- CONNECT GROUPS -->
+    <section id="connect" class="section-padding">
+        <div class="hub-row" style="flex-direction: row-reverse;">
+            <div class="hub-content" data-aos="fade-left">
+                <span class="section-tag">COMMUNITY</span>
+                <h2>CONNECT GROUPS</h2>
+                <div class="divider-gold" style="margin-left: 0;"></div>
+                <p style="color: #aaa; margin-bottom: 30px;">
+                    Our small groups meet across the region in homes, cafes, and parks. We have groups for students, couples, empty nesters, and more.
+                </p>
+                <a href="#contact" class="btn-brutal">Connect with Us</a>
+            </div>
+            <div class="hub-img-container" data-aos="fade-right">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" alt="Connect Groups">
+            </div>
+        </div>
+    </section>
+
+    <!-- OUTREACH MISSION (BOOTCAMP) -->
+    <section id="bootcamp" class="section-padding" style="text-align: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-attachment: fixed;">
+        <div data-aos="fade-up">
+            <span class="section-tag">FRONT LINE TRAINING</span>
+            <h2>OUTREACH MISSION</h2>
+            <div class="divider-gold"></div>
+            <p style="max-width: 800px; margin: 0 auto 40px; color: #ccc; font-size: 1.1rem;">
+                We have an Evangelism Bootcamp where we train what we believe are the most effective evangelists in the world. People are getting saved every single week!
+            </p>
+            <a href="#contact" class="btn-brutal">Enrol in Bootcamp</a>
+        </div>
+    </section>
+
+    <!-- BELIEFS (12 POINTS) -->
+    <section id="beliefs" class="section-padding">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">FOUNDATION</span>
+            <h2>OUR CORE BELIEFS</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div class="beliefs-grid" data-aos="fade-up">
+            <div class="belief-item"><div class="belief-num">1</div><p>True Repentance</p></div>
+            <div class="belief-item"><div class="belief-num">2</div><p>Born Again Life</p></div>
+            <div class="belief-item"><div class="belief-num">3</div><p>Water Baptism</p></div>
+            <div class="belief-item"><div class="belief-num">4</div><p>One God</p></div>
+            <div class="belief-item"><div class="belief-num">5</div><p>The Father</p></div>
+            <div class="belief-item"><div class="belief-num">6</div><p>The Son</p></div>
+            <div class="belief-item"><div class="belief-num">7</div><p>The Holy Spirit</p></div>
+            <div class="belief-item"><div class="belief-num">8</div><p>Spirit Baptism</p></div>
+            <div class="belief-item"><div class="belief-num">9</div><p>Divine Healing</p></div>
+            <div class="belief-item"><div class="belief-num">10</div><p>Marriage & Sexuality</p></div>
+            <div class="belief-item"><div class="belief-num">11</div><p>Judgement</p></div>
+            <div class="belief-item"><div class="belief-num">12</div><p>Eternal Life</p></div>
+        </div>
+    </section>
+
+    <!-- ACCEPTING JESUS NOW -->
+    <section id="accept" class="section-padding">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">THE DECISION</span>
+            <h2>ACCEPTING JESUS NOW</h2>
+            <div class="divider-gold"></div>
+        </div>
+        <div class="faq-container" data-aos="fade-up">
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-header">IF YES? <i class="fas fa-plus"></i></div>
+                <div class="faq-content">You are accepting love and eternal life. God works within you to renew your purpose.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-header">WHO IS JESUS CHRIST? <i class="fas fa-plus"></i></div>
+                <div class="faq-content">The Son of God, savior of the world, who came in human form to forgive us.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-header">WHY DO WE NEED JESUS? <i class="fas fa-plus"></i></div>
+                <div class="faq-content">He paid the penalty for our sins on the cross so that we would not have to.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER WITH VIDEO BACKGROUND -->
+    <footer id="enlist-footer">
+        <div class="footer-overlay"></div>
+        <video id="footer-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80">
+            <source src="https://player.vimeo.com/external/494252666.hd.mp4?s=2f5c711797f619934376485038c9281a89667794&profile_id=175" type="video/mp4">
+        </video>
+        <div data-aos="fade-up">
+            <h2 style="font-size: 3.5rem; margin-bottom: 20px;">JOIN THE ARMY</h2>
+            <p style="margin-bottom: 40px; color: #ccc;">The world is waiting for the manifestation of the Sons of God.</p>
+            <a href="mailto:godsoldiersteam@gmail.com" class="btn-brutal">JOIN THE ARMY</a>
+            <div style="margin-top: 60px; color: var(--gold); display: flex; justify-content: center; gap: 30px; font-size: 1.8rem;">
+                <i class="fab fa-youtube" style="cursor: pointer;"></i>
+                <i class="fab fa-instagram" style="cursor: pointer;"></i>
+                <i class="fab fa-facebook" style="cursor: pointer;"></i>
+            </div>
+            <p style="margin-top: 30px; font-size: 0.7rem; color: #444;">© 2026 GST GLOBAL. DESIGNED WITH GLORY.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        let mouseX = 0, mouseY = 0;
+
+        window.onload = function() {
+            AOS.init({ duration: 1000, once: false });
+            initParticles();
+            animateParticles();
+
+            // Statistics Counter Logic
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        counters.forEach(c => {
+                            c.innerText = '0';
+                            const target = +c.getAttribute('data-target');
+                            const speed = target / 50; 
+                            const update = () => {
+                                const cur = +c.innerText;
+                                if (cur < target) {
+                                    c.innerText = Math.ceil(cur + speed);
+                                    setTimeout(update, 40);
+                                } else c.innerText = target;
+                            };
+                            update();
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            const statsSection = document.getElementById('stats-section');
+            if(statsSection) observer.observe(statsSection);
+
+            // Initialize Testimonials Swiper
+            new Swiper('.testimonials-swiper', {
+                loop: true,
+                speed: 800,
+                autoplay: { delay: 5000, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            });
+        };
+
+        // Particles System (High Repulsion Sensitivity)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.onresize = resize; resize();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.1;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.color = Math.random() > 0.8 ? '#FFD700' : '#444';
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) {
+                    const force = (180 - dist) / 180;
+                    this.x -= (dx / dist) * force * 15.0; // Push particles away
+                    this.y -= (dy / dist) * force * 15.0;
+                }
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+        }
+        function initParticles() { particles = []; for(let i=0; i<120; i++) particles.push(new Particle()); }
+        function animateParticles() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
+
+        // Cursor & Mouse Coordinates
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        window.onmousemove = (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.left = `${mouseX}px`; dot.style.top = `${mouseY}px`;
+            outline.animate({ left: `${mouseX}px`, top: `${mouseY}px` }, { duration: 400, fill: "forwards" });
+            if (e.target.closest('a, button, .mission-card')) {
+                outline.style.width = '70px'; outline.style.height = '70px'; outline.style.background = 'rgba(255,215,0,0.1)';
+            } else {
+                outline.style.width = '40px'; outline.style.height = '40px'; outline.style.background = 'transparent';
+            }
+        };
+
+        function toggleMenu() { document.getElementById('mobileNav').classList.toggle('active'); }
+        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function openPage(t, b) {
+            document.getElementById('modalBody').innerHTML = `<h2 style="color:var(--gold); font-family:Cinzel; margin-bottom:20px;">${t}</h2>${b}`;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function openGallery(n) { openPage(n + " Gallery", `<div style="height:350px; background:#111; display:flex; align-items:center; justify-content:center;">[Mission Feed Feed Feed]</div>`); }
+        function openArtsHub() { openPage("Arts Hub", "<p>Enrol, Equip, Encourage. Offer your talents to God.</p>"); }
+
+        window.onscroll = () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+        };
+    </script>
+</body>
+</html>
