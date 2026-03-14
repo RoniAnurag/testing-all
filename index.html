@@ -256,6 +256,40 @@
         .founder-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         .founder-desc p { color: #ccc; line-height: 1.8; margin-bottom: 20px; font-size: 1.1rem; }
 
+        /* --- LEADERS --- */
+        .leaders-list { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .leader-row {
+            display: flex; align-items: center; gap: 40px; background: rgba(255,255,255,0.02); padding: 30px;
+            border-radius: 30px; border: 1px solid var(--border); transition: 0.4s;
+        }
+        .leader-row:hover { border-color: var(--gold); transform: scale(1.02); background: rgba(255,215,0,0.05); }
+        .leader-img { width: 180px; height: 220px; flex-shrink: 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
+        .leader-img img { width: 100%; height: 100%; object-fit: cover; }
+        .leader-info h3 { font-size: 1.5rem; color: var(--white); margin-bottom: 5px; }
+        .leader-info .subtitle { color: var(--gold); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .leader-info p { color: #aaa; font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- TESTIMONIALS SLIDER --- */
+        .testimonials-section { overflow: hidden; padding: 100px 0; border-top: 1px solid var(--border); }
+        .testimonials-swiper { padding: 40px 0 80px; }
+        .testimonial-slide {
+            max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 50px; padding: 0 20px;
+        }
+        .t-img-wrapper {
+            width: 220px; height: 220px; border-radius: 50%; overflow: hidden;
+            flex-shrink: 0; border: 4px solid var(--gold); background: #111;
+        }
+        .t-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .t-content { position: relative; text-align: left; }
+        .t-content .fa-quote-left { position: absolute; top: -10px; left: -40px; font-size: 1.5rem; color: var(--gold); opacity: 0.3; }
+        .t-text { font-size: 1.1rem; color: #ccc; line-height: 1.8; margin-bottom: 25px; }
+        .t-author { font-weight: 800; color: var(--gold); font-size: 1.2rem; display: block; border-top: 2px solid var(--gold); padding-top: 10px; width: fit-content; }
+        .t-region { color: #888; font-size: 0.8rem; font-style: italic; }
+
+        .swiper-pagination-bullet { background: #555 !important; opacity: 1; }
+        .swiper-pagination-bullet-active { background: var(--gold) !important; }
+        .swiper-button-next, .swiper-button-prev { color: var(--gold) !important; transform: scale(0.7); }
+
         /* --- MISSIONS LIST GRID --- */
         .missions-grid {
             display: grid;
@@ -320,6 +354,9 @@
             .display-text { font-size: 3.5rem; }
             .glass-card { padding: 40px 20px; }
             .missions-grid { grid-template-columns: 1fr; }
+            .leader-row { flex-direction: column; text-align: center; }
+            .testimonial-slide { flex-direction: column; text-align: center; gap: 30px; }
+            .t-content .fa-quote-left { display: none; }
         }
     </style>
 </head>
@@ -436,6 +473,133 @@
                     “God is working to create a community of redeemed people from every tribe, tongue and nation for his glory. This will help you better understand God's mission (missio-Dei) and the vital role of Christ Followers is called to play in advancing his kingdom.”
                 </p>
             </div>
+        </div>
+    </section>
+
+    <!-- LEADERS -->
+    <section id="leaders" class="section-padding" style="background: rgba(255,215,0,0.01);">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">COMMANDERS</span>
+            <h2>MISSIONS LEADERS</h2>
+            <div class="divider-gold"></div>
+        </div>
+        
+        <div class="leaders-list">
+            <!-- Leader 1 -->
+            <div class="leader-row" data-aos="fade-left">
+                <div class="leader-img">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80" alt="Ps. Arvind">
+                </div>
+                <div class="leader-info">
+                    <h3>Ps. Arvind Kumar Singh</h3>
+                    <span class="subtitle">(Missions Leader - North India Team)</span>
+                    <p>Overseeing Himachal, Uttarakhand, Punjab, Haryana, Rajasthan, UP, MP, Chhattisgarh, Gujarat, Maharashtra, Bihar and Jharkhand.</p>
+                </div>
+            </div>
+            <!-- Leader 2 -->
+            <div class="leader-row" data-aos="fade-right">
+                <div class="leader-img">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=500&q=80" alt="Ps. Israel">
+                </div>
+                <div class="leader-info">
+                    <h3>Ps. Israel Sagar</h3>
+                    <span class="subtitle">(Missions Leader - North-East Part India)</span>
+                    <p>North-East includes states of Assam, Manipur, Meghalaya, Mizoram, Nagaland, Tripura and Sikkim.</p>
+                </div>
+            </div>
+            <!-- Leader 3 -->
+            <div class="leader-row" data-aos="fade-left">
+                <div class="leader-img">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80" alt="Bro. Vijay">
+                </div>
+                <div class="leader-info">
+                    <h3>Bro. G Vijay Ashish</h3>
+                    <span class="subtitle">(Missions Leader - Southern Part India)</span>
+                    <p>South India includes five states- Andhra Pradesh, Karnataka, Kerala, Tamil Nadu and Telangana.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">VOICES OF DISCIPLE</span>
+            <h2>SOLDIER'S TESTIMONIALS</h2>
+            <div class="divider-gold"></div>
+        </div>
+
+        <div class="swiper testimonials-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonial-slide">
+                        <div class="t-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80" alt="Soldier 1">
+                        </div>
+                        <div class="t-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p class="t-text">I am Srimati Anicha Churin. In 2022, I met Pastor Israel Sagar. Through Ecclesiastes 11:9-10, my life was transformed. I joined the ministry, letting go of many mistakes. I am grateful to Almighty God.</p>
+                            <span class="t-author">Srimati Anicha Churin</span>
+                            <span class="t-region">North-East Missions Team</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-slide">
+                        <div class="t-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80" alt="Soldier 2">
+                        </div>
+                        <div class="t-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p class="t-text">I was lost in addiction until GST Global visited my village. The power of the Cross broke my chains in one meeting. Today, I am a frontline soldier preaching the same freedom.</p>
+                            <span class="t-author">Samuel Raj</span>
+                            <span class="t-region">North India Team</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-slide">
+                        <div class="t-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&q=80" alt="Soldier 3">
+                        </div>
+                        <div class="t-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p class="t-text">Serving in the War Room has taught me the power of intercession. We have seen literal miracles—cancers healed and families restored—just by standing in the gap.</p>
+                            <span class="t-author">Mary Kutty</span>
+                            <span class="t-region">South India Prayer Division</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-slide">
+                        <div class="t-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Soldier 4">
+                        </div>
+                        <div class="t-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p class="t-text">GST Global has given me a new lens through which to see the world. It is not just about religion; it's about a living fire and the salvation of souls.</p>
+                            <span class="t-author">Ps. Arjun K.</span>
+                            <span class="t-region">Uttarakhand Mission Team</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-slide">
+                        <div class="t-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" alt="Soldier 5">
+                        </div>
+                        <div class="t-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p class="t-text">Seeing thousands set free during the crusades is something I'll never forget. This is the true Great Commission in action.</p>
+                            <span class="t-author">Sister Priya</span>
+                            <span class="t-region">Missions Logistics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
     </section>
 
@@ -642,6 +806,16 @@
             
             const statsSection = document.getElementById('stats-section');
             if(statsSection) observer.observe(statsSection);
+
+            // Initialize Testimonials Swiper
+            new Swiper('.testimonials-swiper', {
+                loop: true,
+                speed: 800,
+                autoplay: { delay: 5000, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                grabCursor: true,
+            });
         };
 
         // Magnetic Buttons
